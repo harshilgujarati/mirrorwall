@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:mirror_wall/controllers/providers/internetcheak_provider.dart';
@@ -73,19 +75,22 @@ class _webpageState extends State<webpage> {
               Expanded(
                 flex: 10,
                 child: Container(
-                  child: ListView.builder(itemCount: Bookmark.length,itemBuilder: (context ,i) => ListTile(
-                    title: Text("$name[i]"),
-                    subtitle: Text("$Bookmark[i]"),
-                    trailing: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          Bookmark.remove(Bookmark[i]);
-                          name.remove(name[i]);
-                        });
-                      },
-                      icon: Icon(Icons.delete),
+                  child: ListView.builder(
+                    itemCount: Bookmark.length,
+                    itemBuilder: (context, i) => ListTile(
+                      title: Text("$name[i]"),
+                      subtitle: Text("$Bookmark[i]"),
+                      trailing: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            Bookmark.remove(Bookmark[i]);
+                            name.remove(name[i]);
+                          });
+                        },
+                        icon: Icon(Icons.delete),
+                      ),
                     ),
-                  ),),
+                  ),
                 ),
               ),
             ],
@@ -266,8 +271,7 @@ class _webpageState extends State<webpage> {
                       onLoadStop: (controller, uri) async {
                         await refreshscreennuchakdu?.endRefreshing();
                       },
-                      initialUrlRequest:
-                          URLRequest(url: Uri.parse(Linkofplateform)),
+                      initialUrlRequest: URLRequest(url: Uri.parse(Linkofplateform)),
                     ),
                   ),
                   SizedBox(
@@ -316,6 +320,19 @@ class _webpageState extends State<webpage> {
                             children: [
                               IconButton(
                                 onPressed: () async {
+                                  await webrefreshthase?.loadUrl(
+                                    urlRequest: URLRequest(
+                                      url: Uri.parse(Linkofplateform),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.home,
+                                  size: 38,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () async {
                                   setState(() {
                                     Bookmark.add(webrefreshthase?.getUrl());
                                     name.add(webrefreshthase?.getTitle());
@@ -329,7 +346,9 @@ class _webpageState extends State<webpage> {
                               IconButton(
                                 onPressed: () async {
                                   if (await webrefreshthase!.canGoBack()) {
-                                    await webrefreshthase?.goBack();
+                                    setState(() {
+                                      webrefreshthase?.goBack();
+                                    });
                                   }
                                 },
                                 icon: Icon(
@@ -369,4 +388,3 @@ class _webpageState extends State<webpage> {
     );
   }
 }
-
