@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:mirror_wall/controllers/providers/internetcheak_provider.dart';
@@ -78,13 +76,14 @@ class _webpageState extends State<webpage> {
                   child: ListView.builder(
                     itemCount: Bookmark.length,
                     itemBuilder: (context, i) => ListTile(
-                      title: Text("$name[i]"),
-                      subtitle: Text("$Bookmark[i]"),
+                      title: Text("${i + 1}.${name[i]}"),
+                      subtitle: Text("${Bookmark[i]}"),
                       trailing: IconButton(
                         onPressed: () {
                           setState(() {
                             Bookmark.remove(Bookmark[i]);
                             name.remove(name[i]);
+                            Navigator.of(context).pop();
                           });
                         },
                         icon: Icon(Icons.delete),
@@ -271,7 +270,8 @@ class _webpageState extends State<webpage> {
                       onLoadStop: (controller, uri) async {
                         await refreshscreennuchakdu?.endRefreshing();
                       },
-                      initialUrlRequest: URLRequest(url: Uri.parse(Linkofplateform)),
+                      initialUrlRequest:
+                          URLRequest(url: Uri.parse(Linkofplateform)),
                     ),
                   ),
                   SizedBox(
@@ -306,8 +306,11 @@ class _webpageState extends State<webpage> {
                                     String newsearch = FindController.text;
                                     webrefreshthase?.loadUrl(
                                       urlRequest: URLRequest(
-                                        url: Uri.parse(
-                                            "${Linkofplateform}search?q=$newsearch"),
+                                        url: (Linkofplateform.isEmpty)
+                                            ? Uri.parse(
+                                                "https://www.google.com/search?q=$newsearch")
+                                            : Uri.parse(
+                                                "${Linkofplateform}search?q=$newsearch"),
                                       ),
                                     );
                                   },
@@ -333,10 +336,8 @@ class _webpageState extends State<webpage> {
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  setState(() {
-                                    Bookmark.add(webrefreshthase?.getUrl());
-                                    name.add(webrefreshthase?.getTitle());
-                                  });
+                                  Bookmark.add(await webrefreshthase?.getUrl());
+                                  name.add(await webrefreshthase?.getTitle());
                                 },
                                 icon: Icon(
                                   Icons.bookmark_add_outlined,
