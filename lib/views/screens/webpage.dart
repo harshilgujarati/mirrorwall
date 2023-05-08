@@ -307,7 +307,7 @@ class _webpageState extends State<webpage> {
                                     webrefreshthase?.loadUrl(
                                       urlRequest: URLRequest(
                                         url: Uri.parse(
-                                            "https://www.google.com/search?q=$newsearch"),
+                                            "${Linkofplateform}search?q=$newsearch"),
                                       ),
                                     );
                                   },
