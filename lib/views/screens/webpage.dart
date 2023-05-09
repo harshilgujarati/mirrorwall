@@ -239,10 +239,7 @@ class _webpageState extends State<webpage> {
           ),
         ],
       ),
-      body: (Provider.of<InternetProvider>(context)
-                  .connectivityModel
-                  .InternetStatus ==
-              "WAITING..")
+      body: (Provider.of<InternetProvider>(context).connectivityModel.InternetStatus == "WAITING..")
           ? Center(
               child: Text(
                 "Cheak Your internet.....",

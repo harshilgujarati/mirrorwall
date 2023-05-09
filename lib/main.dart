@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mirror_wall/controllers/providers/internetcheak_provider.dart';
+import 'package:mirror_wall/views/screens/intro_screen.dart';
 import 'package:mirror_wall/views/screens/webpage.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,8 @@ void main() {
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         routes: {
-          "/": (context) => webpage(),
+          "web_page": (context) => webpage(),
+          "/": (context) => intro_screen(),
         },
       );
     },
